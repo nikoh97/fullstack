@@ -13,7 +13,7 @@ console.log(props)
 return (
   <div>
 
-  {props.parts.map(value => {
+  {props.course.parts.map(value => {
     
     return <Part teksti={value.name} harjoitus={value.exercises}/>
   })}
@@ -34,7 +34,7 @@ return (
 
 const Total = (props) => {
   let sum = 0
-  props.parts.forEach(value => {
+  props.course.parts.forEach(value => {
     sum += value.exercises
   });
 return (
@@ -46,9 +46,11 @@ return (
 
 const App = () => {
   
-  const course = 'Half Stack application development'
+  const course = {
 
-  const parts = [
+  name: 'Half Stack application development',
+
+  parts: [
     {
     name: 'Fundamentals of React',
     exercises: 10
@@ -62,14 +64,16 @@ const App = () => {
     exercises: 14
     }
   ]
+
+}
   
   return (
     <div>
       <Header nimi='Half Stack application development'/>
       
-      <Content parts={parts}/>
+      <Content course={course}/>
       
-      <Total parts={parts}/>
+      <Total course={course}/>
     </div>
   )
 }
