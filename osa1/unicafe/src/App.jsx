@@ -11,20 +11,28 @@ const Button = ({handleClick, text}) => {
 }
 
     const Statistics = ({good, neutral, bad}) => {
+      const kaikki = good + neutral + bad
+      const kaikkiKa = good - bad
+      const ka = kaikkiKa / kaikki
+      const posi = 100 * (good / kaikki)
 return (
     <table>
         <StatRivi text="good" arvo={good}/>
         <StatRivi text="neutral" arvo={neutral}/>
         <StatRivi text="bad" arvo={bad}/>
+        <StatRivi text="all" arvo={kaikki}/>
+        <StatRivi text="average" arvo={ka}/>
+        <StatRivi text="positive" arvo={posi + ' %'}/>
+
     </table>
 )
         
     }
 
-    const StatRivi = ({teksti,arvo}) => {
+    const StatRivi = ({text,arvo}) => {
         return (
         <tr>
-        <td>{teksti}</td>
+        <td>{text}</td>
         <td>{arvo}</td>
         </tr>
         )
