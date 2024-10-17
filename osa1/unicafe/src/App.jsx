@@ -21,13 +21,14 @@ const Button = ({handleClick, text}) => {
 
 return (
     <table>
+      <tbody>
         <StatRivi text="good" arvo={good}/>
         <StatRivi text="neutral" arvo={neutral}/>
         <StatRivi text="bad" arvo={bad}/>
         <StatRivi text="all" arvo={kaikki}/>
         <StatRivi text="average" arvo={ka}/>
         <StatRivi text="positive" arvo={posi + ' %'}/>
-
+        </tbody>
     </table>
 )
         }
