@@ -15,6 +15,10 @@ const Button = ({handleClick, text}) => {
       const kaikkiKa = good - bad
       const ka = kaikkiKa / kaikki
       const posi = 100 * (good / kaikki)
+
+      if (kaikki == 0) return <p>No feedback given</p>
+        else {
+
 return (
     <table>
         <StatRivi text="good" arvo={good}/>
@@ -26,6 +30,7 @@ return (
 
     </table>
 )
+        }
         
     }
 
@@ -36,6 +41,7 @@ return (
         <td>{arvo}</td>
         </tr>
         )
+      
     }
 
 
