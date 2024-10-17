@@ -28,7 +28,13 @@ const App = () => {
 
   const [votes, setÄänet] = useState(Array(anecdotes.length).fill(0))
 
+  
 
+function indexOfMax(arr) {
+  return arr.reduce((maxIndex, elem, i, arr) => 
+      elem > arr[maxIndex] ? i : maxIndex, 0);
+} 
+const mostVotes = indexOfMax(votes)
 
 
 
@@ -42,10 +48,16 @@ const laitaÄäni = () => {
  
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <Button handleClick={() => setSelected(getRandomInt(7))} text="next anecdote"/>
       <Button handleClick={laitaÄäni} text="vote"/>
+
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[mostVotes]}</p>
+      <p>has {votes[mostVotes]} votes</p>
+
     </div>
   )
 }
