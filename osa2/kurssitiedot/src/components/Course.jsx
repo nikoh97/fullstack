@@ -39,7 +39,7 @@ const Total = (props) => {
   props.course.parts.forEach((value) => {
     sum += value.exercises;
   });
-  return <p>Number of exercises {sum} </p>;
+  return <b>Number of exercises {sum} </b>;
 };
 
 export default Course;
