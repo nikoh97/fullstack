@@ -35,11 +35,10 @@ const Part = (props) => {
 };
 
 const Total = (props) => {
-  let sum = 0;
-  props.course.parts.forEach((value) => {
-    sum += value.exercises;
-  });
-  return <b>Number of exercises {sum} </b>;
+  //let sum = 0;
+  const summa = props.course.parts.reduce((sum, currentValue) => sum + currentValue.exercises, 0)
+    
+  return <b>Number of exercises {summa} </b>;
 };
 
 export default Course;
