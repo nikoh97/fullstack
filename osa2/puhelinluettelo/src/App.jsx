@@ -8,6 +8,11 @@ const App = () => {
     event.preventDefault();
     console.log("button clicked", event.target);
 
+    if (persons.find((value) => value.name === newName) != undefined) {
+      window.alert( `${newName} on jo lisätty`);
+      return;
+    }
+
     const noteObject = {
       name: newName,
     };
