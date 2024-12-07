@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import axios from 'axios'
-
-
+import axios from "axios";
+import tiedotService from "./services/tiedot";
 
 const Persons = (props) => {
   return (
     <div>
       {props.lista.map((value, i) => {
-        if (value.name.toLowerCase().includes(props.filtteri.toLowerCase())) {
+        if (value.name && value.name.toLowerCase().includes(props.filtteri.toLowerCase())) {
           return (
             <p key={i}>
               {value.name} {value.number}
@@ -48,7 +47,7 @@ const Filter = (props) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-   // { name: "Arto Hellas", number: "040-123456" },
+    // { name: "Arto Hellas", number: "040-123456" },
     //{ name: "Ada Lovelace", number: "39-44-5323523" },
     //{ name: "Dan Abramov", number: "12-43-234345" },
     //{ name: "Mary Poppendieck", number: "39-23-6423122" },
@@ -58,20 +57,21 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newFilter, setNewFilter] = useState("");
 
-  
-    const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
-    }
+  const hook = () => {
+    tiedotService.haeHenkilot().then((data) => {
+      setPersons(data);
+      console.log("data", data)
+    }).catch(error => {
+      if (!error.response) {
+        console.log('Network Error')
+      } else
+      console.log(error);
+    })
+  };
 
-  console.log('render', persons.length, 'persons')
+  console.log("render", persons.length, "persons");
 
-  useEffect(hook, [])
+  useEffect(hook, []);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -87,16 +87,16 @@ const App = () => {
       number: newNumber,
     };
 
-    axios
-    .post('http://localhost:3001/persons', person)
-    .then(response => {
-      setPersons(persons.concat(response.data));
-    setNewName("");
-    setNewNumber("");
-      
-    })
-
-    
+    tiedotService.asetaHenkilo(person).then((data) => {
+      setPersons(persons.concat(data));
+      setNewName("");
+      setNewNumber("");
+    }).catch(error => {
+      if (!error.response) {
+        console.log('Network Error')
+      } else
+      console.log(error);
+    });
   };
 
   const handlePersonChange = (event) => {
