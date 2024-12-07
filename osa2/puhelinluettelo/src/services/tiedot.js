@@ -29,9 +29,15 @@ const asetaHenkilo = newObject => {
     const request = axios.post(baseUrl, newObject)
     return request.then(response => response.data)
   }
+
+  const poistaHenkilo = (id) => {
+    const delRequest = axios.delete(`${baseUrl}/${id}`)
+    return delRequest.then(response => response.data)
+  }
   
 
 export default {
   haeHenkilot: haeHenkilot,
   asetaHenkilo: asetaHenkilo,
+  poistaHenkilo: poistaHenkilo,
 };

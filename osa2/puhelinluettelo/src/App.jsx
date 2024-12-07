@@ -6,10 +6,16 @@ const Persons = (props) => {
   return (
     <div>
       {props.lista.map((value, i) => {
-        if (value.name && value.name.toLowerCase().includes(props.filtteri.toLowerCase())) {
+        if (
+          value.name &&
+          value.name.toLowerCase().includes(props.filtteri.toLowerCase())
+        ) {
           return (
             <p key={i}>
               {value.name} {value.number}
+              <button onClick={() => props.handleDelete(value)}>
+                poista
+              </button>{" "}
             </p>
           );
         }
@@ -58,15 +64,17 @@ const App = () => {
   const [newFilter, setNewFilter] = useState("");
 
   const hook = () => {
-    tiedotService.haeHenkilot().then((data) => {
-      setPersons(data);
-      console.log("data", data)
-    }).catch(error => {
-      if (!error.response) {
-        console.log('Network Error')
-      } else
-      console.log(error);
-    })
+    tiedotService
+      .haeHenkilot()
+      .then((data) => {
+        setPersons(data);
+        console.log("data", data);
+      })
+      .catch((error) => {
+        if (!error.response) {
+          console.log("Network Error");
+        } else console.log(error);
+      });
   };
 
   console.log("render", persons.length, "persons");
@@ -87,16 +95,18 @@ const App = () => {
       number: newNumber,
     };
 
-    tiedotService.asetaHenkilo(person).then((data) => {
-      setPersons(persons.concat(data));
-      setNewName("");
-      setNewNumber("");
-    }).catch(error => {
-      if (!error.response) {
-        console.log('Network Error')
-      } else
-      console.log(error);
-    });
+    tiedotService
+      .asetaHenkilo(person)
+      .then((data) => {
+        setPersons(persons.concat(data));
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        if (!error.response) {
+          console.log("Network Error");
+        } else console.log(error);
+      });
   };
 
   const handlePersonChange = (event) => {
@@ -114,6 +124,14 @@ const App = () => {
     setNewFilter(event.target.value);
   };
 
+  const handleDelete = (person) => {
+    if (window.confirm(`Poista ${person.name} ?`)) {
+      tiedotService.poistaHenkilo(person.id).then(() => {
+        setPersons(persons.filter((per) => per.id !== person.id));
+      });
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -127,7 +145,11 @@ const App = () => {
         submit={addPerson}
       />
       <h2>Numbers</h2>
-      <Persons lista={persons} filtteri={newFilter} />
+      <Persons
+        lista={persons}
+        filtteri={newFilter}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 };
